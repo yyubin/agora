@@ -23,7 +23,7 @@ class CustomBottomNavBar extends StatelessWidget {
         children: [
           _buildTab(icon: Icons.home, index: 0),
           _buildTab(icon: Icons.forum, index: 1),
-          const SizedBox(width: 48), // 가운데 버튼 공간 확보
+          _buildTab(icon: Icons.add, index: 2),
           _buildTab(icon: Icons.notifications, index: 3),
           _buildTab(icon: Icons.person, index: 4),
         ],

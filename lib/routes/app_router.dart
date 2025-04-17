@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../features/home/screens/home_screen.dart';
 import '../features/community/screens/review_screen.dart';
 import '../features/community/screens/review_detail_screen.dart';
+import '../features/community/screens/review_create_screen.dart';
 import '../features/community/models/review.dart';
 
 final GoRouter appRouter = GoRouter(
@@ -22,6 +23,10 @@ final GoRouter appRouter = GoRouter(
             final review = state.extra as Review;
             return ReviewDetailScreen(review: review);
           },
+        ),
+        GoRoute(
+          path: 'reviews/create',
+          builder: (context, state) => const ReviewCreateScreen(),
         ),
       ],
     ),
