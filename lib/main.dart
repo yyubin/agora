@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'features/home/screens/home_screen.dart';
+import 'routes/app_router.dart';
 
 void main() {
   runApp(MyApp());
@@ -8,14 +8,13 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: '아고라',
+    return MaterialApp.router(
+      routerConfig: appRouter,
+      title: '감상문 앱',
       theme: ThemeData(
-        scaffoldBackgroundColor: Color(0xFFFFFFFF),
-        fontFamily: 'Pretendard',
         useMaterial3: true,
+        fontFamily: 'Pretendard',
       ),
-      home: HomeScreen(),
     );
   }
 }

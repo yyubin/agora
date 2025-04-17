@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../models/review.dart';
-import '../screens/review_detail_screen.dart';
 
 class ReviewCard extends StatelessWidget {
   final Review review;
@@ -11,13 +11,7 @@ class ReviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator를 사용해 상세 페이지로 이동
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ReviewDetailScreen(review: review),
-          ),
-        );
+        context.go('/reviews/detail', extra: review);
       },
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -34,11 +28,8 @@ class ReviewCard extends StatelessWidget {
               const SizedBox(height: 8),
               Text(review.date, style: const TextStyle(color: Colors.grey)),
               const SizedBox(height: 12),
-              Text(
-                review.content,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
+              Text(review.content,
+                  maxLines: 2, overflow: TextOverflow.ellipsis),
             ],
           ),
         ),
