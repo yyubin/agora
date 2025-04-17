@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/bottom_nav_bar.dart';
+import '../../community/screens/review_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -14,7 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _pages = [
     Center(child: Text('홈')),
-    Center(child: Text('커뮤니티')),
+    const ReviewScreen(),
     Center(child: Text('글쓰기')),
     Center(child: Text('알림')),
     Center(child: Text('프로필')),
