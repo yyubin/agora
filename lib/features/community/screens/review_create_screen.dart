@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../models/review.dart';
+import '../providers/review_provider.dart';
 
-class ReviewCreateScreen extends StatefulWidget {
+class ReviewCreateScreen extends ConsumerStatefulWidget {
   const ReviewCreateScreen({super.key});
 
   @override
-  State<ReviewCreateScreen> createState() => _ReviewCreateScreenState();
+  ConsumerState<ReviewCreateScreen> createState() => _ReviewCreateScreenState();
 }
 
-class _ReviewCreateScreenState extends State<ReviewCreateScreen> {
+class _ReviewCreateScreenState extends ConsumerState<ReviewCreateScreen> {
   final _formKey = GlobalKey<FormState>();
   String title = '';
   String content = '';
@@ -24,17 +26,15 @@ class _ReviewCreateScreenState extends State<ReviewCreateScreen> {
         content: content,
       );
 
-      dummyReviews.insert(0, newReview); // 최신순 정렬이라면 insert(0, ...)
+      ref.read(reviewListProvider.notifier).addReview(newReview);
 
-      // 메시지 보여주고 돌아가기
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('감상문이 등록되었습니다!')),
       );
 
-      context.pop();
+      context.pop(); // go_router 방식
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
