@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../features/community/screens/review_comments_screen.dart';
 import '../features/home/screens/home_screen.dart';
 import '../features/community/screens/review_screen.dart';
 import '../features/community/screens/review_detail_screen.dart';
@@ -23,6 +24,13 @@ final GoRouter appRouter = GoRouter(
           builder: (context, state) {
             final index = int.parse(state.pathParameters['index']!);
             return ReviewDetailScreen(index: index, key: ValueKey(state.fullPath));
+          },
+        ),
+        GoRoute(
+          path: 'reviews/detail/:index/comments',
+          builder: (context, state) {
+            final idx = int.parse(state.pathParameters['index']!);
+            return ReviewCommentsScreen(index: idx);
           },
         ),
         GoRoute(
