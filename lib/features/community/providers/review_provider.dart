@@ -24,4 +24,16 @@ class ReviewListNotifier extends StateNotifier<List<Review>> {
   void addReview(Review review) {
     state = [review, ...state]; // 최신순 추가
   }
+
+  void editReview(int index, Review updatedReview) {
+    final updatedList = [...state];
+    updatedList[index] = updatedReview;
+    state = updatedList;
+    print(updatedList[index].content);
+  }
+
+  void deleteReview(int index) {
+    final updatedList = [...state]..removeAt(index);
+    state = updatedList;
+  }
 }

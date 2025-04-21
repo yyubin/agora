@@ -16,9 +16,10 @@ class ReviewScreen extends ConsumerWidget {
       appBar: AppBar(title: const Text('감상문 리스트')),
       body: ListView.builder(
         itemCount: reviews.length,
-        itemBuilder: (context, index) {
-          return ReviewCard(review: reviews[index]);
-        },
+          itemBuilder: (context, index) {
+            final review = reviews[index];
+            return ReviewCard(review: review, index: index);
+          }
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => context.push('/reviews/create'),

@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/review.dart';
 
-class ReviewCard extends StatelessWidget {
+class ReviewCard extends ConsumerWidget {
   final Review review;
+  final int index;
 
-  const ReviewCard({super.key, required this.review});
+  const ReviewCard({super.key, required this.review, required this.index});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
     return GestureDetector(
       onTap: () {
-        context.go('/reviews/detail', extra: review);
+        context.push('/reviews/detail/$index');
       },
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

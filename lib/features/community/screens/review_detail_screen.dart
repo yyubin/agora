@@ -1,29 +1,41 @@
 import 'package:flutter/material.dart';
-import '../models/review.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import '../providers/review_provider.dart';
 
-class ReviewDetailScreen extends StatelessWidget {
-  final Review review;
+class ReviewDetailScreen extends ConsumerWidget {
+  final int index;
 
-  const ReviewDetailScreen({super.key, required this.review});
+  const ReviewDetailScreen({super.key, required this.index});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final review = ref.watch(
+      reviewListProvider.select((list) => list[index]),
+    );
+
     return Scaffold(
-      appBar: AppBar(title: Text(review.title)),
+      appBar: AppBar(
+        title: Text(review.title),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.edit),
+            onPressed: () {
+              context.push('/reviews/edit/$index');
+            },
+          ),
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () {
+              ref.read(reviewListProvider.notifier).deleteReview(index);
+              context.pop(); // 리스트로 복귀
+            },
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(review.date,
-                style: const TextStyle(color: Colors.grey, fontSize: 14)),
-            const SizedBox(height: 16),
-            Text(
-              review.content,
-              style: const TextStyle(fontSize: 16),
-            ),
-          ],
-        ),
+        child: Text(review.content, style: const TextStyle(fontSize: 16)),
       ),
     );
   }

@@ -4,6 +4,9 @@ class Review {
   final String content;
 
   Review({required this.title, required this.date, required this.content});
+
+  @override
+  List<Object> get props => [title, date, content];
 }
 
 final List<Review> dummyReviews = [
