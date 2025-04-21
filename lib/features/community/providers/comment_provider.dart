@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import '../models/comment.dart';
 
-/// 리뷰마다 댓글 리스트를 따로 관리 (key = reviewIndex)
 final commentListProvider =
 StateNotifierProvider.family<CommentListNotifier, List<Comment>, int>(
       (ref, reviewIdx) => CommentListNotifier(),
@@ -13,13 +12,15 @@ class CommentListNotifier extends StateNotifier<List<Comment>> {
 
   final _uuid = const Uuid();
 
-  void add(String author, String content) {
+  // ========== CRUD ==========
+  void add(String author, String content, {String? parentId}) {
     state = [
       Comment(
         id: _uuid.v4(),
         author: author,
         content: content,
         date: DateTime.now(),
+        parentId: parentId,
       ),
       ...state,
     ];
@@ -33,6 +34,7 @@ class CommentListNotifier extends StateNotifier<List<Comment>> {
   }
 
   void delete(String id) {
-    state = state.where((c) => c.id != id).toList();
+    // 원댓글 삭제 시 그 대댓글도 함께 제거
+    state = state.where((c) => c.id != id && c.parentId != id).toList();
   }
 }
