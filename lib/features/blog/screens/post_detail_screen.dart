@@ -1,22 +1,50 @@
 import 'package:agora_flutter/core/models/post_model.dart';
+import 'package:agora_flutter/features/blog/widgets/comment_bottom_sheet.dart';
+import 'package:agora_flutter/features/user/screens/author_profile_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../../user/screens/author_profile_screen.dart';
-
-class PostDetailScreen extends StatelessWidget {
+class PostDetailScreen extends StatefulWidget {
   final Post post;
-
   const PostDetailScreen({super.key, required this.post});
 
   @override
+  State<PostDetailScreen> createState() => _PostDetailScreenState();
+}
+
+class _PostDetailScreenState extends State<PostDetailScreen> {
+  bool _bookmarked = false;
+  final _fakeInput = TextEditingController();
+
+  void _toggleBookmark() {
+    setState(() => _bookmarked = !_bookmarked);
+    // TODO: 실제 북마크 API 호출
+  }
+
+  void _openComments() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (_) => const CommentBottomSheet(),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final post = widget.post;
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            expandedHeight: 250.0,
+            expandedHeight: 250,
             pinned: true,
-            leading: BackButton(color: Colors.white),
+            leading: const BackButton(color: Colors.white),
+            actions: [
+              IconButton(
+                icon: Icon(_bookmarked ? Icons.bookmark : Icons.bookmark_border),
+                onPressed: _toggleBookmark,
+              ),
+            ],
             flexibleSpace: FlexibleSpaceBar(
               background: Image.asset(
                 post.imageUrl,
@@ -28,7 +56,7 @@ class PostDetailScreen extends StatelessWidget {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -38,9 +66,10 @@ class PostDetailScreen extends StatelessWidget {
                       radius: 35,
                       backgroundImage: AssetImage(post.author.avatarUrl),
                     ),
-                    title: Text(post.author.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-                    subtitle: Text(post.category, style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w600)),
-                    // onTap 속성 추가
+                    title: Text(post.author.name,
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                    subtitle: Text(post.category,
+                        style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w600)),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -51,28 +80,43 @@ class PostDetailScreen extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 20),
-                  Text(
-                    post.title,
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w700,
-                      height: 1.45,
-                    ),
-                  ),
+                  Text(post.title,
+                      style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700, height: 1.45)),
                   const SizedBox(height: 20),
                   Text(
-                    '${post.content}\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                    style: const TextStyle(
-                      color: Color(0xFF6D7E97),
-                      fontSize: 16,
-                      height: 1.62,
-                    ),
+                    '${post.content}\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...',
+                    style: const TextStyle(color: Color(0xFF6D7E97), fontSize: 16, height: 1.62),
                   ),
+                  const SizedBox(height: 100),
                 ],
               ),
             ),
-          )
+          ),
         ],
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+          child: InkWell(
+            onTap: _openComments,
+            child: IgnorePointer(
+              child: TextField(
+                controller: _fakeInput,
+                decoration: InputDecoration(
+                  hintText: 'Add a comment...',
+                  suffixIcon: const Icon(Icons.messenger_outline),
+                  filled: true,
+                  fillColor: Colors.grey.shade100,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(24),
+                    borderSide: BorderSide.none,
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
