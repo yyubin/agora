@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:agora_flutter/features/onboarding/widgets/page_indicator.dart';
 // TODO: 로그인 또는 홈 화면의 경로를 import 하세요.
-// import 'package:agora_flutter/features/auth/screens/login_screen.dart';
+import 'package:agora_flutter/features/auth/screens/welcome_screen.dart';
 
 // 온보딩 페이지에 필요한 데이터를 담는 클래스
 class OnboardingPageData {
@@ -110,11 +110,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   } else {
                     // 마지막 페이지일 경우, 로그인 또는 홈 화면으로 이동
                     // TODO: 아래 네비게이션 로직을 실제 앱 흐름에 맞게 수정하세요.
-                    /*
+
                     Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (_) => LoginScreen()),
+                      MaterialPageRoute(builder: (_) => WelcomeScreen()),
                     );
-                    */
+
                     print("Go to Home or Login Screen");
                   }
                 },
