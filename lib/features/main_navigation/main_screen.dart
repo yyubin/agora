@@ -1,6 +1,10 @@
 import 'package:agora_flutter/features/home/screens/home_screen.dart';
 import 'package:agora_flutter/features/search/screens/search_screen.dart';
+import 'package:agora_flutter/features/saved/screens/saved_screen.dart';
 import 'package:flutter/material.dart';
+
+import '../blog/screens/create_blog_post.dart';
+import '../settings/screens/settings_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -18,8 +22,8 @@ class _MainScreenState extends State<MainScreen> {
     const HomeScreen(),
     const SearchScreen(),
     // TODO: Add Post 화면은 버튼에서 직접 다른 방식으로 호출할 것이므로 비워둡니다.
-    const Scaffold(body: Center(child: Text('Saved Screen'))), // 저장 화면
-    const Scaffold(body: Center(child: Text('Profile Screen'))), // 프로필 화면
+    const SavedScreen(),
+    const SettingsScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -41,7 +45,10 @@ class _MainScreenState extends State<MainScreen> {
       // 플로팅 액션 버튼 (글쓰기 버튼)
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // TODO: 글쓰기 화면으로 이동하는 로직 구현
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const CreatePostScreen()),
+          );
         },
         shape: const CircleBorder(),
         backgroundColor: const Color(0xFF3177E0),
@@ -64,7 +71,7 @@ class _MainScreenState extends State<MainScreen> {
               _buildNavItem(icon: Icons.search, index: 1),
               const SizedBox(width: 40), // 플로팅 버튼이 차지할 공간
               _buildNavItem(icon: Icons.bookmark_border, index: 2),
-              _buildNavItem(icon: Icons.person_outline, index: 3),
+              _buildNavItem(icon: Icons.settings_outlined, index: 3),
             ],
           ),
         ),
