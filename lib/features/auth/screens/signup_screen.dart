@@ -1,5 +1,6 @@
 import 'package:agora_flutter/features/auth/screens/login_screen.dart';
 import 'package:agora_flutter/features/auth/widgets/custom_text_form_field.dart';
+import 'package:agora_flutter/features/topic_selection/screens/topic_selection_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -48,6 +49,10 @@ class SignUpScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // TODO: 회원가입 로직 구현
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (_) => const TopicSelectionScreen()),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF3076E0),
@@ -62,6 +67,7 @@ class SignUpScreen extends StatelessWidget {
                     color: Colors.white,
                     fontSize: 16,
                     fontWeight: FontWeight.w700),
+
               ),
             ),
             const SizedBox(height: 24),
