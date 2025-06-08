@@ -1,6 +1,8 @@
 import 'package:agora_flutter/core/models/post_model.dart';
 import 'package:flutter/material.dart';
 
+import '../../user/screens/author_profile_screen.dart';
+
 class FollowingPostCard extends StatelessWidget {
   final Post post;
   final VoidCallback onTap;
@@ -14,21 +16,30 @@ class FollowingPostCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              CircleAvatar(
-                radius: 15,
-                backgroundImage: AssetImage(post.author.avatarUrl),
-              ),
-              const SizedBox(width: 8),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(post.author.name, style: const TextStyle(fontWeight: FontWeight.w700)),
-                  Text(post.category, style: const TextStyle(fontSize: 12, color: Colors.grey)),
-                ],
-              ),
-            ],
+          GestureDetector(
+            onTap: () {
+              // 작가 프로필 화면으로 이동
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => AuthorProfileScreen(author: post.author)),
+              );
+            },
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: 15,
+                  backgroundImage: AssetImage(post.author.avatarUrl),
+                ),
+                const SizedBox(width: 8),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(post.author.name, style: const TextStyle(fontWeight: FontWeight.w700)),
+                    Text(post.category, style: const TextStyle(fontSize: 12, color: Colors.grey)),
+                  ],
+                ),
+              ],
+            ),
           ),
           const SizedBox(height: 12),
           Text(post.title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w600)),

@@ -1,6 +1,8 @@
 import 'package:agora_flutter/core/models/post_model.dart';
 import 'package:flutter/material.dart';
 
+import '../../user/screens/author_profile_screen.dart';
+
 class PostDetailScreen extends StatelessWidget {
   final Post post;
 
@@ -38,6 +40,15 @@ class PostDetailScreen extends StatelessWidget {
                     ),
                     title: Text(post.author.name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
                     subtitle: Text(post.category, style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w600)),
+                    // onTap 속성 추가
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => AuthorProfileScreen(author: post.author),
+                        ),
+                      );
+                    },
                   ),
                   const SizedBox(height: 20),
                   Text(
