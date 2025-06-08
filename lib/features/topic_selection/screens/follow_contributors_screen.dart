@@ -1,3 +1,4 @@
+import 'package:agora_flutter/features/home/screens/home_screen.dart';
 import 'package:agora_flutter/features/topic_selection/widgets/contributor_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -94,6 +95,10 @@ class _FollowContributorsScreenState extends State<FollowContributorsScreen> {
               child: ElevatedButton(
                 onPressed: () {
                   // TODO: 홈 화면으로 이동하는 로직 구현
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (_) => const HomeScreen()),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF3076E0),
